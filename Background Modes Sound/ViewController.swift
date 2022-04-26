@@ -6,14 +6,31 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
+    var sesOynatici:AVAudioPlayer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+        do {
+            let dosyaYolu = Bundle.main.path(forResource: "music", ofType: ".mp3")
+            sesOynatici = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: dosyaYolu!))
+            sesOynatici.prepareToPlay()
+        } catch  {
+            print(error.localizedDescription)
+        }
+
     }
 
-
+    @IBAction func start(_ sender: Any) {
+        sesOynatici.play()
+    }
+    
+    @IBAction func stop(_ sender: Any) {
+        sesOynatici.stop()
+    }
 }
 
